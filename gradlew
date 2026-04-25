@@ -1,11 +1,14 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-# Gradle Wrapper script for Unix systems
+# Gradle wrapper script
 
-# Set up Gradle home
 if [ -z "$GRADLE_HOME" ]; then
-  GRADLE_HOME="./gradle"  # Adjust this path based on your setup
+  GRADLE_HOME="$(dirname "$0")/gradle";
 fi
 
-# Execute the Gradle command with any passed arguments
-$GRADLE_HOME/bin/gradle "$@"
+if [ -x "$GRADLE_HOME/bin/gradle" ]; then
+  exec "$GRADLE_HOME/bin/gradle" "$@"
+else
+  echo "Gradle not found. Please ensure that the path is correct."
+  exit 1
+fi
